@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import rawData from './data.json?raw';
+import { loadFromSupabase, saveToSupabase, subscribeToChanges } from './supabase';
 
 const BRAND = {
   navy: '#0d2137',
@@ -70,24 +71,62 @@ function App() {
     trackerEdits: {},
     weeklyChecks: {},
   });
+  const [syncStatus, setSyncStatus] = useState('loading');
+  const saveTimer = useRef(null);
+  const skipNextRemote = useRef(false);
 
+  // Load: try Supabase first, fall back to localStorage
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
+    (async function init() {
+      try {
+        const remote = await loadFromSupabase();
+        if (remote && remote.tracker_data && Object.keys(remote.tracker_data).length > 0) {
+          setPersisted({
+            trackerEdits: remote.tracker_data || {},
+            weeklyChecks: remote.weekly_checks || {},
+          });
+          setSyncStatus('synced');
+          return;
+        }
+      } catch { /* fall through */ }
+      // Fallback to localStorage
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setPersisted({
+            trackerEdits: parsed.trackerEdits || {},
+            weeklyChecks: parsed.weeklyChecks || {},
+          });
+        }
+      } catch { /* ignore */ }
+      setSyncStatus('local');
+    })();
+
+    // Subscribe to real-time changes from other users
+    const channel = subscribeToChanges(function(newData) {
+      if (skipNextRemote.current) { skipNextRemote.current = false; return; }
+      if (newData) {
         setPersisted({
-          trackerEdits: parsed.trackerEdits || {},
-          weeklyChecks: parsed.weeklyChecks || {},
+          trackerEdits: newData.tracker_data || {},
+          weeklyChecks: newData.weekly_checks || {},
         });
+        setSyncStatus('synced');
       }
-    } catch {
-      setPersisted({ trackerEdits: {}, weeklyChecks: {} });
-    }
+    });
+
+    return function() { channel.unsubscribe(); };
   }, []);
 
+  // Save: localStorage immediately, Supabase debounced
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(async function() {
+      skipNextRemote.current = true;
+      const ok = await saveToSupabase(persisted.trackerEdits, persisted.weeklyChecks, 'user');
+      setSyncStatus(ok ? 'synced' : 'local');
+    }, 1000);
   }, [persisted]);
 
   useEffect(() => {
@@ -223,6 +262,9 @@ function App() {
           <p style={{ margin: '4px 0 0', opacity: 0.9 }}>
             {data.clinic.services} | {data.clinic.location} | Mission: {data.clinic.mission}
           </p>
+          <div style={{ fontSize: 11, marginTop: 4, opacity: 0.7 }}>
+            {syncStatus === 'loading' ? '⏳ Loading...' : syncStatus === 'synced' ? '☁️ Synced — shared with team' : '💾 Saved locally'}
+          </div>
           <div className="grid-3" style={{ marginTop: 12 }}>
             <div className="card" style={{ padding: 10 }}>
               <strong>Clinic Identifiers</strong>
