@@ -17,7 +17,7 @@ const phases = [
     id: 2, name: "Phase 2", label: "Priority Payers (Medicaid/SoonerCare)", icon: "🏥",
     color: "#059669", bg: "#ECFDF5", border: "#A7F3D0",
     steps: [
-      { id: "p1", label: "OHCA/SoonerCare", note: "oklahoma.gov/ohca", status: "not_started", time: "MUST HAVE", instructions: ["Submit group enrollment via OHCA provider portal."], docs: ["W-9", "NPIs", "License"], payer: true },
+      { id: "p1", label: "OHCA/SoonerCare", note: "oklahoma.gov/ohca", status: "docs_gathering", time: "MUST HAVE — Sadie collecting docs", instructions: ["Submit group enrollment via OHCA provider portal.", "Sadie collecting Lashauna docs (license, SSN, DOB, W-9, CV)", "Need to confirm Apollo supervisor billing structure with OHCA"], docs: ["W-9", "NPIs", "License", "Lashauna docs"], payer: true },
       { id: "p2", label: "Aetna Better Health", note: "aetnabetterhealth.com/oklahoma", status: "not_started", time: "MUST HAVE", instructions: ["Submit via Availity or Aetna portal."], docs: ["W-9", "Roster"], payer: true },
       { id: "p3", label: "Humana Healthy Horizons", note: "humana.com/medicaid/oklahoma", status: "not_started", time: "MUST HAVE", instructions: ["Contact Humana provider relations for enrollment."], docs: ["W-9", "Roster"], payer: true },
       { id: "p4", label: "Oklahoma Complete Health", note: "oklahomacompletehealth.com", status: "not_started", time: "MUST HAVE", instructions: ["Submit group application via portal."], docs: ["W-9", "Roster"], payer: true },
@@ -103,34 +103,18 @@ export default function App() {
   const [expandedStep, setExpandedStep] = useState(null);
   const [syncStatus, setSyncStatus] = useState("idle");
 
+  // Load from localStorage on mount
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, u => {
-      setUser(u);
-      if (!u) setAuthLoading(false);
-    });
-    
-    getRedirectResult(auth).then((result) => {
-      if (result?.user) setUser(result.user);
-      setAuthLoading(false);
-    }).catch(() => setAuthLoading(false));
-
-    return unsub;
+    try {
+      const saved = localStorage.getItem('sh-credentialing');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setData(buildData(parsed.steps || {}));
+      }
+    } catch (e) { console.error('Load error:', e); }
   }, []);
 
-  useEffect(() => {
-    if (!user) return;
-    const ref = doc(db, "users", user.uid);
-    const unsub = onSnapshot(ref, snap => {
-      if (snap.exists()) {
-        const d = snap.data();
-        setData(buildData(d.steps || {}));
-      }
-    });
-    return unsub;
-  }, [user]);
-
   const saveToCloud = async (newData) => {
-    if (!user) return;
     setSyncStatus("saving");
     const steps = {};
     newData.forEach(p => p.steps.forEach(s => {
@@ -143,16 +127,14 @@ export default function App() {
         notes: s.notes
       };
     }));
-    await setDoc(doc(db, "users", user.uid), { steps, updatedAt: new Date().toISOString() }, { merge: true });
+    try {
+      localStorage.setItem('sh-credentialing', JSON.stringify({ steps, updatedAt: new Date().toISOString() }));
+    } catch (e) { console.error('Save error:', e); }
     setSyncStatus("saved");
     setTimeout(() => setSyncStatus("idle"), 2500);
   };
 
-  const handleLogin = () => signInWithPopup(auth, provider).catch(err => {
-    console.error("Login error:", err);
-    // Fallback to redirect if popup blocked
-    if (err.code === 'auth/popup-blocked') signInWithRedirect(auth, provider);
-  });
+  // No login needed
 
   const updateStep = (phaseId, stepId, fields) => {
     const newData = data.map(p => p.id === phaseId ? { ...p, steps: p.steps.map(s => s.id === stepId ? { ...s, ...fields } : s) } : p);
@@ -160,8 +142,8 @@ export default function App() {
     saveToCloud(newData);
   };
 
-  if (authLoading) return <div style={{ minHeight: "100vh", background: "#0A1628", display: "flex", alignItems: "center", justifyContent: "center", color: "#475569" }}>Loading...</div>;
-  if (!user) return <LoginScreen onLogin={handleLogin} />;
+  // No login required — just a tracking app
+  // Data persists in localStorage
 
   const allPayers = data.flatMap(p => p.steps).filter(s => s.payer);
   const approvedCount = allPayers.filter(s => s.status === "approved" || s.status === "active").length;
@@ -175,7 +157,7 @@ export default function App() {
         <div style={{ textAlign: "center", marginBottom: 20 }}>
           <h1 style={{ fontSize: 22, margin: 0 }}>Credentialing Command Center</h1>
           <div style={{ fontSize: 12, color: "#94A3B8", marginTop: 4 }}>
-            {syncStatus === "saving" ? "⏳ Syncing..." : "☁️ Cloud Synced"} · <button onClick={() => signOut(auth)} style={{ background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 11 }}>Sign out</button>
+            {syncStatus === "saving" ? "⏳ Saving..." : "💾 Saved Locally"}
           </div>
         </div>
 
