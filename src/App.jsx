@@ -5,37 +5,125 @@ const phases = [
     id: 1, name: "Phase 1", label: "Foundational Setup", icon: "🪪",
     color: "#2563EB", bg: "#EFF6FF", border: "#BFDBFE",
     steps: [
-      { id: "1a", label: "Org NPI (Type 2): 1871316414", note: "nppes.cms.hhs.gov", status: "complete", time: "DONE ✅" },
-      { id: "1b", label: "Clinician 1 (Lashauna): 1619348810", note: "nppes.cms.hhs.gov", status: "complete", time: "DONE ✅" },
-      { id: "1c", label: "Clinician 2 (Apollo): 1639576911", note: "nppes.cms.hhs.gov", status: "complete", time: "DONE ✅" },
+      { id: "1a", label: "Org NPI (Type 2): 1871316414", note: "nppes.cms.hhs.gov", status: "complete", time: "DONE ✅",
+        instructions: ["Verified: Org NPI (Type 2) is active and correct."],
+        docs: [] },
+      { id: "1b", label: "Clinician 1 (Lashauna Herrera Romero): 1619348810", note: "nppes.cms.hhs.gov", status: "complete", time: "DONE ✅",
+        instructions: ["Verified: Clinician 1 NPI is active and correct."],
+        docs: [] },
+      { id: "1c", label: "Clinician 2 (Apollo Gonzalez): 1639576911", note: "nppes.cms.hhs.gov", status: "complete", time: "DONE ✅",
+        instructions: ["Verified: Clinician 2 NPI is active and correct."],
+        docs: [] },
     ],
   },
   {
     id: 2, name: "Phase 2", label: "Priority Payers (Medicaid/SoonerCare)", icon: "🏥",
     color: "#059669", bg: "#ECFDF5", border: "#A7F3D0",
     steps: [
-      { id: "p1", label: "OHCA/SoonerCare", note: "oklahoma.gov/ohca", status: "docs_gathering", time: "MUST HAVE — Sadie collecting docs", payer: true },
-      { id: "p2", label: "Aetna Better Health", note: "aetnabetterhealth.com/oklahoma", status: "not_started", time: "MUST HAVE", payer: true },
-      { id: "p3", label: "Humana Healthy Horizons", note: "humana.com/medicaid/oklahoma", status: "not_started", time: "MUST HAVE", payer: true },
-      { id: "p4", label: "Oklahoma Complete Health", note: "oklahomacompletehealth.com", status: "not_started", time: "MUST HAVE", payer: true },
+      { id: "p1", label: "OHCA/SoonerCare", note: "oklahoma.gov/ohca", status: "docs_gathering", time: "MUST HAVE — Sadie collecting docs", payer: true,
+        instructions: [
+          "1. Go to oklahoma.gov/ohca → Provider Enrollment",
+          "2. Submit GROUP enrollment application (not individual)",
+          "3. Include Org NPI (1871316414) as billing NPI",
+          "4. List both clinicians on the roster",
+          "5. Attach all required docs (see below)",
+          "6. Confirm Apollo's supervisor billing structure with OHCA — he bills under Lashauna",
+          "7. Processing time: 30-90 days"
+        ],
+        docs: ["W-9 (signed)", "Org NPI confirmation letter", "Lashauna's license (LPC/LCSW)", "Lashauna's SSN & DOB", "Lashauna's CV/resume", "Apollo's license", "Apollo's supervisor agreement with Lashauna", "Malpractice insurance certificate", "Business license", "Articles of incorporation", "Tax ID/EIN letter"] },
+      { id: "p2", label: "Aetna Better Health (Medicaid)", note: "aetnabetterhealth.com/oklahoma", status: "not_started", time: "MUST HAVE", payer: true,
+        instructions: [
+          "1. Go to Availity.com or Aetna Better Health OK provider portal",
+          "2. Select 'New Provider Enrollment'",
+          "3. Submit as group practice",
+          "4. Include OHCA approval letter once received",
+          "5. Attach clinician roster with NPIs",
+          "6. Processing time: 30-60 days",
+          "⚡ TIP: Can submit before OHCA approval — they'll pend it"
+        ],
+        docs: ["W-9", "Clinician roster with NPIs", "OHCA approval letter (when received)", "Malpractice certificate", "Business license"] },
+      { id: "p3", label: "Humana Healthy Horizons", note: "humana.com/medicaid/oklahoma", status: "not_started", time: "MUST HAVE", payer: true,
+        instructions: [
+          "1. Contact Humana Provider Relations: 1-800-626-2741",
+          "2. Request group enrollment application",
+          "3. Submit completed application with roster",
+          "4. May require CAQH profiles (check with rep)",
+          "5. Processing time: 45-90 days"
+        ],
+        docs: ["W-9", "Clinician roster", "OHCA approval (when received)", "Malpractice certificate"] },
+      { id: "p4", label: "Oklahoma Complete Health", note: "oklahomacompletehealth.com", status: "not_started", time: "MUST HAVE", payer: true,
+        instructions: [
+          "1. Go to oklahomacompletehealth.com → For Providers → Join Our Network",
+          "2. Download and complete group application",
+          "3. Submit via portal or fax",
+          "4. Include all supporting docs",
+          "5. Processing time: 30-60 days"
+        ],
+        docs: ["W-9", "Clinician roster with NPIs", "OHCA approval (when received)", "Business license", "Malpractice certificate"] },
     ],
   },
   {
     id: 3, name: "Phase 3", label: "Commercial Payers (CAQH Needed)", icon: "💼",
     color: "#7C3AED", bg: "#F5F3FF", border: "#DDD6FE",
     steps: [
-      { id: "p5", label: "BCBS Oklahoma", note: "bcbsok.com", status: "not_started", time: "SHOULD HAVE", payer: true },
-      { id: "p6", label: "UnitedHealthcare/Optum", note: "uhcprovider.com", status: "not_started", time: "SHOULD HAVE", payer: true },
-      { id: "p7", label: "Aetna Commercial", note: "aetna.com", status: "not_started", time: "SHOULD HAVE", payer: true },
+      { id: "p5", label: "BCBS Oklahoma", note: "bcbsok.com", status: "not_started", time: "SHOULD HAVE", payer: true,
+        instructions: [
+          "⚠️ REQUIRES CAQH PROFILES FIRST",
+          "1. Create CAQH ProView profiles for both clinicians at proview.caqh.org",
+          "2. Go to bcbsok.com → Provider → Join Our Network",
+          "3. Submit Group Onboarding Form",
+          "4. Reference CAQH profile IDs",
+          "5. Processing time: 60-120 days"
+        ],
+        docs: ["CAQH profiles (both clinicians)", "Malpractice insurance", "Group application", "W-9"] },
+      { id: "p6", label: "UnitedHealthcare/Optum", note: "uhcprovider.com", status: "not_started", time: "SHOULD HAVE", payer: true,
+        instructions: [
+          "⚠️ REQUIRES CAQH PROFILES FIRST",
+          "1. Ensure CAQH profiles are complete and attested",
+          "2. Go to uhcprovider.com → Join Our Network",
+          "3. Submit using CAQH IDs",
+          "4. Processing time: 60-90 days"
+        ],
+        docs: ["CAQH profiles (both clinicians)", "W-9"] },
+      { id: "p7", label: "Aetna Commercial", note: "aetna.com", status: "not_started", time: "SHOULD HAVE", payer: true,
+        instructions: [
+          "⚠️ SEPARATE from Aetna Better Health (Medicaid)",
+          "⚠️ REQUIRES CAQH PROFILES FIRST",
+          "1. Submit via Availity.com",
+          "2. Select commercial (not Medicaid) enrollment",
+          "3. Reference CAQH profile IDs",
+          "4. Processing time: 45-90 days"
+        ],
+        docs: ["CAQH profiles (both clinicians)", "W-9"] },
     ],
   },
   {
     id: 4, name: "Phase 4", label: "Additional Payers", icon: "📋",
     color: "#D97706", bg: "#FFFBEB", border: "#FDE68A",
     steps: [
-      { id: "p8", label: "Cigna", note: "cigna.com", status: "not_started", time: "NICE TO HAVE", payer: true },
-      { id: "p9", label: "HealthChoice", note: "oklahoma.gov/omes/services/healthchoice", status: "not_started", time: "NICE TO HAVE", payer: true },
-      { id: "p10", label: "Ambetter", note: "ambetter.oklahomacompletehealth.com", status: "not_started", time: "NICE TO HAVE", payer: true },
+      { id: "p8", label: "Cigna", note: "cigna.com", status: "not_started", time: "NICE TO HAVE", payer: true,
+        instructions: [
+          "1. Submit Group Participation Request via cigna.com",
+          "2. Requires CAQH profiles",
+          "3. Processing time: 60-120 days"
+        ],
+        docs: ["CAQH profiles", "W-9"] },
+      { id: "p9", label: "HealthChoice", note: "oklahoma.gov/omes/services/healthchoice", status: "not_started", time: "NICE TO HAVE", payer: true,
+        instructions: [
+          "1. Go to HealthChoice provider portal",
+          "2. Submit group enrollment",
+          "3. State employee insurance — good volume",
+          "4. Processing time: 30-60 days"
+        ],
+        docs: ["W-9", "Business license", "Clinician roster"] },
+      { id: "p10", label: "Ambetter", note: "ambetter.oklahomacompletehealth.com", status: "not_started", time: "NICE TO HAVE", payer: true,
+        instructions: [
+          "1. Apply through Oklahoma Complete Health (same parent company)",
+          "2. May be combined with OCH enrollment",
+          "3. Requires CAQH profiles",
+          "4. Processing time: 45-90 days"
+        ],
+        docs: ["CAQH profiles", "W-9"] },
     ],
   },
 ];
@@ -206,13 +294,34 @@ export default function App() {
 
                         {isOpen && (
                           <div style={{ padding: "0 5px 15px", display: "flex", flexDirection: "column", gap: 10 }}>
+                            {/* Instructions */}
+                            {step.instructions && step.instructions.length > 0 && (
+                              <div style={{ background: "#F0F9FF", borderRadius: 8, padding: 10, border: "1px solid #BAE6FD" }}>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: "#0369A1", marginBottom: 6 }}>📋 How To Do This:</div>
+                                {step.instructions.map(function(inst, i) {
+                                  return <div key={i} style={{ fontSize: 12, color: "#1E293B", marginBottom: 3, lineHeight: 1.4 }}>{inst}</div>;
+                                })}
+                              </div>
+                            )}
+
+                            {/* Required Docs */}
+                            {step.docs && step.docs.length > 0 && (
+                              <div style={{ background: "#FFF7ED", borderRadius: 8, padding: 10, border: "1px solid #FED7AA" }}>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: "#C2410C", marginBottom: 6 }}>📄 Required Documents:</div>
+                                {step.docs.map(function(d, i) {
+                                  return <div key={i} style={{ fontSize: 12, color: "#1E293B", marginBottom: 2 }}>• {d}</div>;
+                                })}
+                              </div>
+                            )}
+
+                            {/* Date fields */}
                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                               <div>
-                                <label style={{ fontSize: 10, color: "#94A3B8", display: "block", marginBottom: 2 }}>Submitted</label>
+                                <label style={{ fontSize: 10, color: "#94A3B8", display: "block", marginBottom: 2 }}>Date Submitted</label>
                                 <input type="date" value={step.dateSubmitted || ""} onChange={function(e) { updateStep(phase.id, step.id, { dateSubmitted: e.target.value }); }} style={{ width: "100%", padding: 6, borderRadius: 6, border: "1px solid #E2E8F0", fontSize: 12 }} />
                               </div>
                               <div>
-                                <label style={{ fontSize: 10, color: "#94A3B8", display: "block", marginBottom: 2 }}>Approved</label>
+                                <label style={{ fontSize: 10, color: "#94A3B8", display: "block", marginBottom: 2 }}>Date Approved</label>
                                 <input type="date" value={step.dateApproved || ""} onChange={function(e) { updateStep(phase.id, step.id, { dateApproved: e.target.value }); }} style={{ width: "100%", padding: 6, borderRadius: 6, border: "1px solid #E2E8F0", fontSize: 12 }} />
                               </div>
                               <div>
