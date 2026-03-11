@@ -1,12 +1,615 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Safe Harbor Credentialing Command Center</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Harbor — Credentialing Guide 🌊</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Nunito', sans-serif; background: #f0f7ff; min-height: 100vh; color: #1a2535; }
+
+  .topbar { background: #0d2137; color: white; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .topbar-title { font-size: 20px; font-weight: 800; }
+  .topbar-sub { font-size: 13px; opacity: 0.7; margin-top: 2px; }
+  .topbar-badge { background: #1a7a8a; border-radius: 20px; padding: 6px 16px; font-size: 13px; font-weight: 700; }
+
+  .alert-banner { background: #c0392b; color: white; padding: 14px 24px; font-size: 14px; font-weight: 700; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+
+  .main { max-width: 680px; margin: 0 auto; padding: 30px 20px 80px; }
+
+  .welcome { background: white; border-radius: 24px; padding: 32px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; }
+  .welcome-emoji { font-size: 52px; margin-bottom: 12px; }
+  .welcome h1 { font-size: 26px; font-weight: 900; color: #0d2137; margin-bottom: 8px; }
+  .welcome p { font-size: 15px; color: #5d6d7e; line-height: 1.7; }
+
+  .progress-section { background: white; border-radius: 20px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .progress-label { font-size: 15px; font-weight: 800; color: #0d2137; }
+  .progress-count { font-size: 13px; color: #1a7a8a; font-weight: 700; }
+  .progress-bar { background: #e8f4f6; border-radius: 100px; height: 14px; overflow: hidden; }
+  .progress-fill { background: linear-gradient(90deg, #1a7a8a, #2ab5cc); height: 100%; border-radius: 100px; transition: width 0.6s ease; }
+
+  /* MISTAKE COUNTER */
+  .trap-counter { background: #fff8e1; border: 2px solid #f9a825; border-radius: 16px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 14px; }
+  .trap-counter .trap-icon { font-size: 32px; }
+  .trap-counter .trap-text strong { font-size: 15px; color: #0d2137; display: block; }
+  .trap-counter .trap-text span { font-size: 13px; color: #7d6000; font-weight: 600; }
+
+  .section-label { font-size: 13px; font-weight: 900; color: #1a7a8a; text-transform: uppercase; letter-spacing: 1.5px; margin: 28px 0 12px; padding-left: 4px; }
+
+  .step-card { background: white; border-radius: 20px; margin-bottom: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); overflow: hidden; transition: transform 0.2s; }
+  .step-card:hover { transform: translateY(-2px); }
+
+  .step-header { padding: 18px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; user-select: none; }
+  .step-number { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .step-number.todo { background: #f0f7ff; }
+  .step-number.done { background: #d4edda; }
+  .step-number.active { background: #e0f4f7; }
+
+  .step-info { flex: 1; }
+  .step-title { font-size: 16px; font-weight: 800; color: #0d2137; margin-bottom: 3px; }
+  .step-subtitle { font-size: 12px; color: #5d6d7e; font-weight: 600; }
+
+  .step-badge { padding: 5px 13px; border-radius: 20px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+  .badge-todo { background: #f0f7ff; color: #1a7a8a; }
+  .badge-done { background: #d4edda; color: #155724; }
+  .badge-next { background: #fff3cd; color: #856404; }
+
+  .step-body { display: none; padding: 0 20px 22px; border-top: 2px dashed #f0f7ff; }
+  .step-body.open { display: block; }
+  .step-body h3 { font-size: 14px; font-weight: 800; color: #0d2137; margin: 18px 0 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* INFO BOXES */
+  .box { border-radius: 14px; padding: 14px 18px; margin: 14px 0; font-size: 14px; line-height: 1.7; font-weight: 600; }
+  .box.blue { background: #e8f4f6; border-left: 4px solid #1a7a8a; color: #0d2137; }
+  .box.green { background: #e8f8ee; border-left: 4px solid #27ae60; color: #145a32; }
+  .box.yellow { background: #fffbea; border-left: 4px solid #e8a838; color: #7d5a00; }
+
+  /* TRAP BOX — the mistake warnings */
+  .trap-box { background: #fff0f0; border: 2px solid #e74c3c; border-radius: 14px; padding: 16px 18px; margin: 14px 0; }
+  .trap-box .trap-header { font-size: 14px; font-weight: 900; color: #c0392b; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .trap-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #fce; font-size: 13px; color: #333; font-weight: 600; line-height: 1.5; }
+  .trap-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .trap-item .trap-emoji { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; color: #333; font-weight: 600; line-height: 1.4; }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box { width: 22px; height: 22px; border: 2px solid #1a7a8a; border-radius: 6px; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; transition: all 0.2s; margin-top: 1px; }
+  .check-box.checked { background: #1a7a8a; border-color: #1a7a8a; color: white; }
+
+  /* BUTTONS */
+  .phone-btn { display: inline-flex; align-items: center; gap: 8px; background: #0d2137; color: white; padding: 11px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; text-decoration: none; margin: 5px 4px 5px 0; transition: background 0.2s; }
+  .phone-btn:hover { background: #1a7a8a; }
+  .phone-btn.teal { background: #1a7a8a; }
+  .phone-btn.teal:hover { background: #0d2137; }
+  .web-btn { display: inline-flex; align-items: center; gap: 8px; background: #1a7a8a; color: white; padding: 11px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; text-decoration: none; margin: 5px 4px 5px 0; transition: background 0.2s; }
+  .web-btn:hover { background: #0d2137; }
+  .action-btn { width: 100%; background: linear-gradient(135deg, #1a7a8a, #2ab5cc); color: white; border: none; padding: 17px 24px; border-radius: 16px; font-size: 16px; font-weight: 900; cursor: pointer; margin-top: 18px; font-family: 'Nunito', sans-serif; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(26,122,138,0.3); }
+  .action-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(26,122,138,0.4); }
+
+  /* SCRIPT */
+  .script-box { background: #f8fbfc; border: 2px solid #e0eef0; border-radius: 14px; padding: 16px; font-size: 13px; line-height: 1.8; color: #0d2137; margin-top: 10px; font-weight: 600; white-space: pre-line; }
+  .script-copy { background: #e0f4f7; color: #1a7a8a; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 800; cursor: pointer; margin-top: 8px; font-family: 'Nunito', sans-serif; }
+
+  /* DOCS */
+  .doc-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: #f8fbfc; border-radius: 10px; margin-bottom: 7px; font-size: 13px; font-weight: 700; color: #0d2137; }
+  .doc-status { margin-left: auto; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 800; white-space: nowrap; }
+  .doc-ok { background: #d4edda; color: #155724; }
+  .doc-expired { background: #fde8e8; color: #c0392b; }
+  .doc-needed { background: #fff3cd; color: #856404; }
+
+  .divider { text-align: center; font-size: 12px; font-weight: 800; color: #aab; margin: 6px 0 16px; text-transform: uppercase; letter-spacing: 1px; }
+
+  #final-msg { display: none; text-align: center; padding: 40px 20px; }
+
+  @media (max-width: 500px) {
+    .welcome h1 { font-size: 21px; }
+    .topbar-title { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">🌊 Safe Harbor Behavioral Health</div>
+    <div class="topbar-sub">Credentialing Guide — Tulsa, Oklahoma</div>
+  </div>
+  <div class="topbar-badge">No Child Is Broken 💙</div>
+</div>
+
+<div class="alert-banner">
+  <span style="font-size:22px;flex-shrink:0;">🚨</span>
+  <div><strong>URGENT — Do This Today:</strong> Apollo's malpractice insurance EXPIRED February 28, 2026. You CANNOT submit any insurance applications until this is renewed. Call your liability carrier right now and request a new Certificate of Insurance.</div>
+</div>
+
+<div class="main">
+
+  <div class="welcome">
+    <div class="welcome-emoji">🗺️</div>
+    <h1>Your Step-by-Step Credentialing Guide</h1>
+    <p>Each step tells you <strong>exactly what to do</strong> AND warns you about the <strong>most common mistakes</strong> people make — so you don't lose weeks of time finding out the hard way. One step at a time. You've got this, Adam! 💪</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <div class="progress-label">🎯 Your Progress</div>
+      <div class="progress-count" id="progress-text">0 of 9 steps done</div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- TRAP COUNTER -->
+  <div class="trap-counter">
+    <div class="trap-icon">🪤</div>
+    <div class="trap-text">
+      <strong>This guide protects you from 15 known traps</strong>
+      <span>Real mistakes that real clinics made — that delayed their first payment by months. Each step shows you what to watch out for.</span>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 1 ═══ -->
+  <div class="section-label">🔵 Phase 1 — Foundation (Start Here!)</div>
+
+  <!-- STEP 1: GATHER INFO -->
+  <div class="step-card" id="card-1">
+    <div class="step-header" onclick="toggle(1)">
+      <div class="step-number active" id="num-1">📋</div>
+      <div class="step-info">
+        <div class="step-title">Gather Clinician Information</div>
+        <div class="step-subtitle">Collect info for Lashauna & Apollo before touching any website</div>
+      </div>
+      <div class="step-badge badge-next" id="badge-1">👆 Start Here</div>
+    </div>
+    <div class="step-body open" id="body-1">
+      <div class="box blue">
+        💡 <strong>Think of this like packing a suitcase before a trip.</strong> Get everything ready BEFORE you open any website. If you stop mid-form to hunt for a license number, the page can time out and you'll have to start all over.
+      </div>
+
+      <h3>📝 Collect These for EACH Clinician</h3>
+
+      <div class="divider">— Lashauna —</div>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Full legal name — exactly as it appears on her state license</li>
+        <li><div class="check-box" onclick="check(this)"></div>Date of birth</li>
+        <li><div class="check-box" onclick="check(this)"></div>Social Security Number</li>
+        <li><div class="check-box" onclick="check(this)"></div>Home mailing address</li>
+        <li><div class="check-box" onclick="check(this)"></div>Personal email address (NOT the Safe Harbor email)</li>
+        <li><div class="check-box" onclick="check(this)"></div>License type (LPC, LCSW, LMFT, etc.) and license number</li>
+        <li><div class="check-box" onclick="check(this)"></div>License expiration date</li>
+        <li><div class="check-box" onclick="check(this)"></div>Malpractice carrier name, policy number, expiration date</li>
+        <li><div class="check-box" onclick="check(this)"></div>Full work history — every job for the last 10 years with exact month and year start/end dates</li>
+      </ul>
+
+      <div class="divider">— Apollo —</div>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Full legal name — exactly as it appears on his state license</li>
+        <li><div class="check-box" onclick="check(this)"></div>Date of birth</li>
+        <li><div class="check-box" onclick="check(this)"></div>Social Security Number</li>
+        <li><div class="check-box" onclick="check(this)"></div>Home mailing address</li>
+        <li><div class="check-box" onclick="check(this)"></div>Personal email address (NOT the Safe Harbor email)</li>
+        <li><div class="check-box" onclick="check(this)"></div>License type and license number</li>
+        <li><div class="check-box" onclick="check(this)"></div>License expiration date</li>
+        <li><div class="check-box" onclick="check(this)"></div>🚨 NEW malpractice certificate (must be renewed first!)</li>
+        <li><div class="check-box" onclick="check(this)"></div>Full work history — every job for the last 10 years with exact month and year start/end dates</li>
+      </ul>
+
+      <!-- TRAP BOX -->
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap #1 — The Work History Gap Trap</div>
+        <div class="trap-item"><span class="trap-emoji">⚠️</span><span>CAQH requires a <strong>complete work history with ZERO unexplained gaps</strong> going back 10 years. Any gap longer than 30 days must have a written explanation. "Between jobs June–August 2022" is fine — leaving it blank is NOT. Unexplained gaps can add 6–12 weeks to your approval.</span></div>
+        <div class="trap-item"><span class="trap-emoji">📅</span><span>CAQH needs <strong>month AND year</strong> for every job start and end date. "Spring 2021" is not acceptable. Ask your clinicians for exact dates now — don't guess.</span></div>
+        <div class="trap-item"><span class="trap-emoji">💡</span><span>If a clinician was in school, on maternity leave, caring for a family member, or between jobs — that's fine! Just write it down with the dates.</span></div>
+      </div>
+
+      <button class="action-btn" onclick="markDone(1)">✅ I Have All the Information — Next Step!</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: NPI -->
+  <div class="step-card" id="card-2">
+    <div class="step-header" onclick="toggle(2)">
+      <div class="step-number todo" id="num-2">🪪</div>
+      <div class="step-info">
+        <div class="step-title">Get NPI Numbers for Both Clinicians</div>
+        <div class="step-subtitle">Free government website — 20 min per person</div>
+      </div>
+      <div class="step-badge badge-todo" id="badge-2">To Do</div>
+    </div>
+    <div class="step-body" id="body-2">
+      <div class="box blue">
+        🪪 <strong>What is an NPI?</strong> It's like a Social Security Number for a healthcare provider. Every insurance company in America requires one before they'll pay a claim. It's free and takes about 20 minutes.
+      </div>
+
+      <h3>🖥️ Website</h3>
+      <a href="https://nppes.cms.hhs.gov" target="_blank" class="web-btn">🌐 Open NPPES Website</a>
+
+      <h3>👣 Do This For Each Clinician</h3>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Click "Create Account" — use the clinician's PERSONAL email, not Safe Harbor's</li>
+        <li><div class="check-box" onclick="check(this)"></div>Verify the email confirmation they receive</li>
+        <li><div class="check-box" onclick="check(this)"></div>Click "Apply for NPI" → choose <strong>INDIVIDUAL</strong> (NOT Organization)</li>
+        <li><div class="check-box" onclick="check(this)"></div>Type their legal name EXACTLY as it appears on their state license</li>
+        <li><div class="check-box" onclick="check(this)"></div>Enter Safe Harbor's address as the practice location</li>
+        <li><div class="check-box" onclick="check(this)"></div>Enter the correct taxonomy code (ask Adam if unsure)</li>
+        <li><div class="check-box" onclick="check(this)"></div>Submit and WRITE DOWN the NPI number you receive</li>
+        <li><div class="check-box" onclick="check(this)"></div>Save the confirmation email — do not delete it</li>
+      </ul>
+
+      <!-- TRAP BOX -->
+      <div class="trap-box">
+        <div class="trap-header">🪤 Traps #2 & #3 — Name Mismatch + Wrong NPI Type</div>
+        <div class="trap-item"><span class="trap-emoji">🔤</span><span><strong>Trap #2 — Name Mismatch:</strong> The name you enter in NPPES must be <em>identical</em> to the name on the state license. If the license says "Jennifer Marie Smith" but you type "Jennifer Smith" — that mismatch will cause rejections at EVERY payer down the line. Even one extra middle name causes problems.</span></div>
+        <div class="trap-item"><span class="trap-emoji">☑️</span><span><strong>Trap #3 — Wrong NPI Type:</strong> Always click INDIVIDUAL (Type 1). If you accidentally choose Organization (Type 2), you've created the wrong kind of NPI and it takes weeks to fix. Safe Harbor's organization NPI is already done — these are for the individual people.</span></div>
+        <div class="trap-item"><span class="trap-emoji">🔢</span><span><strong>Trap #4 — Wrong Taxonomy Code:</strong> The taxonomy code tells insurance what KIND of provider this person is. A wrong code means they might pay the wrong rate — or reject claims entirely. Confirm the exact code before submitting.</span></div>
+      </div>
+
+      <div class="box green">✅ You'll get the NPI number <strong>instantly</strong> after submitting. Save it somewhere safe — you'll need it for every single payer application.</div>
+
+      <button class="action-btn" onclick="markDone(2)">✅ Both NPI Numbers Received — Next Step!</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: CAQH -->
+  <div class="step-card" id="card-3">
+    <div class="step-header" onclick="toggle(3)">
+      <div class="step-number todo" id="num-3">📁</div>
+      <div class="step-info">
+        <div class="step-title">Build CAQH ProView Profiles</div>
+        <div class="step-subtitle">The master credentialing file — the most important step</div>
+      </div>
+      <div class="step-badge badge-todo" id="badge-3">To Do</div>
+    </div>
+    <div class="step-body" id="body-3">
+      <div class="box blue">
+        📁 <strong>What is CAQH?</strong> Think of it as a master file about each clinician. Almost every insurance company pulls from here instead of asking for the same papers 10 times. You fill it out ONCE and share it with everyone. But it must be <strong>100% complete</strong> — even 99% means nothing.
+      </div>
+
+      <h3>🖥️ Website & Phone</h3>
+      <a href="https://proview.caqh.org" target="_blank" class="web-btn">🌐 Open CAQH ProView</a>
+      <a href="tel:8885991771" class="phone-btn teal">📞 CAQH Help: 888-599-1771</a>
+
+      <h3>📄 Documents to Upload</h3>
+      <div class="doc-item"><span>📄</span> Lashauna's state license <span class="doc-status doc-ok">✅ Current</span></div>
+      <div class="doc-item"><span>📄</span> Apollo's state license <span class="doc-status doc-ok">✅ Current</span></div>
+      <div class="doc-item"><span>🛡️</span> Lashauna's malpractice certificate <span class="doc-status doc-ok">✅ Good til Sept 2026</span></div>
+      <div class="doc-item"><span>🛡️</span> Apollo's malpractice certificate <span class="doc-status doc-expired">🚨 RENEW FIRST</span></div>
+      <div class="doc-item"><span>📋</span> CV / Resume for each clinician <span class="doc-status doc-needed">⚠️ Confirm current</span></div>
+      <div class="doc-item"><span>📝</span> W-9 for each clinician <span class="doc-status doc-ok">✅ Have it</span></div>
+
+      <h3>✅ After Filling Out CAQH</h3>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>All sections are 100% complete — no blank fields anywhere</li>
+        <li><div class="check-box" onclick="check(this)"></div>Clicked the ATTEST button at the end</li>
+        <li><div class="check-box" onclick="check(this)"></div>Authorized EVERY payer you want to work with to access the profile</li>
+        <li><div class="check-box" onclick="check(this)"></div>Set a phone reminder to re-attest every 90 days</li>
+      </ul>
+
+      <!-- TRAP BOX -->
+      <div class="trap-box">
+        <div class="trap-header">🪤 Traps #5, #6 & #7 — The CAQH Killers</div>
+        <div class="trap-item"><span class="trap-emoji">💯</span><span><strong>Trap #5 — Not 100% Complete:</strong> Research shows that 60–70% of credentialing delays come from incomplete CAQH profiles. A profile that's 95% done is the same as 0% done — payers will NOT review it until every single field is filled. Never leave a field blank. If it doesn't apply, type "N/A".</span></div>
+        <div class="trap-item"><span class="trap-emoji">📅</span><span><strong>Trap #6 — Forgetting to Attest:</strong> CAQH requires you to click "Attest" every 120 days to confirm the info is still accurate. If you miss it, your profile goes <em>inactive</em>. Some insurers treat an inactive profile as a withdrawn application — meaning you start over from scratch. Set a recurring phone alarm right now.</span></div>
+        <div class="trap-item"><span class="trap-emoji">🔓</span><span><strong>Trap #7 — Not Authorizing Payers:</strong> Filling out CAQH is not enough. You must also go into the CAQH portal and explicitly give EACH payer permission to view the profile. If you don't do this, payers literally cannot see it — and they won't tell you that's why they're stuck.</span></div>
+        <div class="trap-item"><span class="trap-emoji">💰</span><span><strong>Trap #8 — Wrong Malpractice Numbers:</strong> In CAQH, there's a field for malpractice coverage amounts. One box says "Per Occurrence" and one says "Aggregate." A common mistake is entering the wrong number of zeros — like $100,000 instead of $1,000,000. That one missing zero causes automatic rejections at most payers.</span></div>
+        <div class="trap-item"><span class="trap-emoji">📤</span><span><strong>Trap #9 — Uploading Expired Documents:</strong> If a document will expire <em>during</em> the credentialing process (which takes 3–6 months), upload the renewed version now. A payer reviewing your file in 4 months will see an expired document and deny you. Check every expiration date before uploading.</span></div>
+      </div>
+
+      <div class="box yellow">
+        ⏰ <strong>Set these phone reminders right now:</strong><br>
+        • Every 90 days — "Re-attest CAQH for Lashauna"<br>
+        • Every 90 days — "Re-attest CAQH for Apollo"<br>
+        • 60 days before each license expiration<br>
+        • 60 days before each malpractice policy expiration
+      </div>
+
+      <button class="action-btn" onclick="markDone(3)">✅ Both CAQH Profiles Complete & Attested — Next Step!</button>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 2 ═══ -->
+  <div class="section-label">🟢 Phase 2 — Oklahoma Medicaid (SoonerSelect)</div>
+
+  <!-- STEP 4: OHCA -->
+  <div class="step-card" id="card-4">
+    <div class="step-header" onclick="toggle(4)">
+      <div class="step-number todo" id="num-4">🏥</div>
+      <div class="step-info">
+        <div class="step-title">OHCA SoonerCare Group Enrollment</div>
+        <div class="step-subtitle">Oklahoma base Medicaid — 30 to 90 days to process</div>
+      </div>
+      <div class="step-badge badge-todo" id="badge-4">To Do</div>
+    </div>
+    <div class="step-body" id="body-4">
+      <div class="box blue">
+        🏥 Safe Harbor is already approved as an organization. Now you need to enroll both clinicians as <strong>individual rendering providers</strong> under the group. This is different from the organization enrollment — it's a separate step.
+      </div>
+
+      <a href="https://oklahoma.gov/ohca" target="_blank" class="web-btn">🌐 OHCA Portal</a>
+      <a href="tel:4055227171" class="phone-btn">📞 OHCA: 405-522-7171</a>
+
+      <h3>📞 Call Script — What To Say</h3>
+      <div class="script-box">"Hi, my name is Adam James. I'm the owner of Safe Harbor Behavioral Health in Tulsa, Oklahoma.
+
+Our group NPI is 9876543210 and our Tax ID is [YOUR EIN].
+
+We're already approved for Oklahoma Medicaid as an organization. I need to enroll two individual clinicians as rendering providers under our group. Can you walk me through that process?"</div>
+      <button class="script-copy" onclick="copyScript(this)">📋 Copy This Script</button>
+
+      <!-- TRAP BOX -->
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap #10 — Enrolling as Individual Instead of Under the Group</div>
+        <div class="trap-item"><span class="trap-emoji">🏢</span><span>When you enroll clinicians with OHCA, you must enroll them <strong>under Safe Harbor's group NPI</strong> — not as standalone individuals. If they enroll independently, claims will be rejected because the billing NPI won't match the group. Always tell OHCA you are adding rendering providers to an existing group.</span></div>
+        <div class="trap-item"><span class="trap-emoji">📋</span><span>Always ask for a <strong>confirmation number</strong> at the end of every call. Write it down immediately. OHCA will not track your call — only you can prove it happened.</span></div>
+      </div>
+
+      <button class="action-btn" onclick="markDone(4)">✅ OHCA Submitted — Next Step!</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: SOONERSELECT MCOs -->
+  <div class="step-card" id="card-5">
+    <div class="step-header" onclick="toggle(5)">
+      <div class="step-number todo" id="num-5">💊</div>
+      <div class="step-info">
+        <div class="step-title">SoonerSelect — 3 Separate Insurance Plans</div>
+        <div class="step-subtitle">Humana + Aetna Better Health + Oklahoma Complete Health</div>
+      </div>
+      <div class="step-badge badge-todo" id="badge-5">To Do</div>
+    </div>
+    <div class="step-body" id="body-5">
+      <div class="box yellow">
+        ⚠️ <strong>This surprises most new clinics:</strong> Oklahoma Medicaid (SoonerCare/SoonerSelect) runs through 3 separate private insurance companies called MCOs. Even though you're approved for base Medicaid, you must apply to all 3 plans individually. Missing even one means you can't be paid by patients in that plan.
+      </div>
+
+      <h3>Plan 1 — Humana Healthy Horizons</h3>
+      <a href="https://provider.humana.com/medicaid/oklahoma-medicaid" target="_blank" class="web-btn">🌐 Humana Portal</a>
+      <a href="tel:8552239868" class="phone-btn">📞 855-223-9868</a>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Call and ask for the provider contracting department</li>
+        <li><div class="check-box" onclick="check(this)"></div>Request a group contract application for behavioral health</li>
+        <li><div class="check-box" onclick="check(this)"></div>Submit and save confirmation number</li>
+      </ul>
+
+      <h3>Plan 2 — Aetna Better Health of Oklahoma</h3>
+      <a href="https://www.aetnabetterhealth.com/oklahoma" target="_blank" class="web-btn">🌐 Aetna Better Health</a>
+      <a href="tel:8443654385" class="phone-btn">📞 844-365-4385</a>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Submit application through Availity portal</li>
+        <li><div class="check-box" onclick="check(this)"></div>Save confirmation number</li>
+      </ul>
+
+      <h3>Plan 3 — Oklahoma Complete Health</h3>
+      <a href="https://www.oklahomacompletehealth.com" target="_blank" class="web-btn">🌐 OK Complete Health</a>
+      <a href="tel:8337521664" class="phone-btn">📞 833-752-1664</a>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Submit through their provider portal</li>
+        <li><div class="check-box" onclick="check(this)"></div>Save confirmation number</li>
+      </ul>
+
+      <!-- TRAP BOX -->
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap #11 — Assuming OHCA Approval Covers the MCOs</div>
+        <div class="trap-item"><span class="trap-emoji">❌</span><span>This is the #1 Oklahoma-specific mistake. Providers think being approved for base SoonerCare (OHCA) means they're automatically in all 3 MCO plans. <strong>They are completely separate.</strong> You must apply to each MCO individually or you will get paid nothing when a patient's card says "Humana" or "Oklahoma Complete Health."</span></div>
+        <div class="trap-item"><span class="trap-emoji">📞</span><span>After submitting to each MCO, <strong>follow up every 7 days</strong> by phone. Payers do not call you when something is wrong — they just let your application sit. If you don't follow up, nothing moves.</span></div>
+      </div>
+
+      <button class="action-btn" onclick="markDone(5)">✅ All 3 MCOs Submitted — Next Step!</button>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 3 ═══ -->
+  <div class="section-label">🟣 Phase 3 — Commercial Insurance (Start These ASAP!)</div>
+
+  <!-- STEP 6: BCBS -->
+  <div class="step-card" id="card-6">
+    <div class="step-header" onclick="toggle(6)">
+      <div class="step-number todo" id="num-6">💙</div>
+      <div class="step-info">
+        <div class="step-title">BCBS Oklahoma</div>
+        <div class="step-subtitle">Biggest commercial payer in Oklahoma — 90 to 120 days</div>
+      </div>
+      <div class="step-badge badge-todo" id="badge-6">To Do</div>
+    </div>
+    <div class="step-body" id="body-6">
+      <div class="box blue">
+        💙 BCBS Oklahoma is the most important commercial payer in the state. It takes 90–120 days to process, so start this one as soon as CAQH is complete — even while other things are still in progress.
+      </div>
+
+      <a href="https://www.bcbsok.com/provider" target="_blank" class="web-btn">🌐 BCBS Oklahoma Portal</a>
+      <a href="tel:8009425837" class="phone-btn">📞 800-942-5837</a>
+
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Log into CAQH first — authorize BCBS Oklahoma to access the profile</li>
+        <li><div class="check-box" onclick="check(this)"></div>Submit group application via BCBSOK portal</li>
+        <li><div class="check-box" onclick="check(this)"></div>Write down the confirmation number</li>
+        <li><div class="check-box" onclick="check(this)"></div>Set a follow-up reminder for exactly 7 days from submission</li>
+      </ul>
+
+      <!-- TRAP BOX -->
+      <div class="trap-box">
+        <div class="trap-header">🪤 Traps #12 & #13 — Not Following Up + Not Authorizing CAQH</div>
+        <div class="trap-item"><span class="trap-emoji">📵</span><span><strong>Trap #12 — Payers Won't Call You:</strong> This is the most important thing to know about commercial payers. When something is wrong with your application — a missing document, a question, a discrepancy — payers do NOT call you. They just put your file on hold and wait. If you don't follow up by phone every 7–14 days, your file could sit for months doing nothing.</span></div>
+        <div class="trap-item"><span class="trap-emoji">🔓</span><span><strong>Trap #13 — CAQH Not Authorized for BCBS:</strong> Before submitting to BCBS, you must go into CAQH and specifically click to authorize BCBS Oklahoma access. If you forget this step, BCBS will tell you the application is "pending CAQH verification" forever — because they literally can't see the file.</span></div>
+      </div>
+
+      <button class="action-btn" onclick="markDone(6)">✅ BCBS Submitted — Next Step!</button>
+    </div>
+  </div>
+
+  <!-- STEP 7: AETNA COMMERCIAL -->
+  <div class="step-card" id="card-7">
+    <div class="step-header" onclick="toggle(7)">
+      <div class="step-number todo" id="num-7">🟠</div>
+      <div class="step-info">
+        <div class="step-title">Aetna Commercial</div>
+        <div class="step-subtitle">Submit through Availity — 90 to 120 days</div>
+      </div>
+      <div class="step-badge badge-todo" id="badge-7">To Do</div>
+    </div>
+    <div class="step-body" id="body-7">
+      <a href="https://www.availity.com" target="_blank" class="web-btn">🌐 Availity Portal</a>
+      <a href="tel:8006240756" class="phone-btn">📞 800-624-0756</a>
+
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Log into Availity (availity.com)</li>
+        <li><div class="check-box" onclick="check(this)"></div>Find Aetna Commercial credentialing application</li>
+        <li><div class="check-box" onclick="check(this)"></div>Submit and write down confirmation number</li>
+        <li><div class="check-box" onclick="check(this)"></div>Set 7-day follow-up reminder</li>
+      </ul>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap #14 — Confusing Aetna Better Health with Aetna Commercial</div>
+        <div class="trap-item"><span class="trap-emoji">⚠️</span><span>Aetna has TWO separate networks in Oklahoma — <strong>Aetna Better Health</strong> (Medicaid/SoonerSelect) and <strong>Aetna Commercial</strong> (private insurance). They are completely different applications, different portals, and different approval processes. You must apply to both separately.</span></div>
+      </div>
+
+      <button class="action-btn" onclick="markDone(7)">✅ Aetna Commercial Submitted — Next Step!</button>
+    </div>
+  </div>
+
+  <!-- STEP 8: UHC + CIGNA -->
+  <div class="step-card" id="card-8">
+    <div class="step-header" onclick="toggle(8)">
+      <div class="step-number todo" id="num-8">🟡</div>
+      <div class="step-info">
+        <div class="step-title">UnitedHealthcare & Cigna</div>
+        <div class="step-subtitle">Start these after BCBS & Aetna are submitted</div>
+      </div>
+      <div class="step-badge badge-todo" id="badge-8">To Do</div>
+    </div>
+    <div class="step-body" id="body-8">
+      <h3>UnitedHealthcare / Optum</h3>
+      <a href="https://www.uhcprovider.com" target="_blank" class="web-btn">🌐 UHC Portal</a>
+      <a href="tel:8007114555" class="phone-btn">📞 800-711-4555</a>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Submit group application and write down confirmation number</li>
+        <li><div class="check-box" onclick="check(this)"></div>Set 7-day follow-up reminder</li>
+      </ul>
+
+      <h3>Cigna / Evernorth</h3>
+      <a href="https://cignaforhcp.cigna.com" target="_blank" class="web-btn">🌐 Cigna Portal</a>
+      <a href="tel:8008824462" class="phone-btn">📞 800-882-4462</a>
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>Submit group application and write down confirmation number</li>
+        <li><div class="check-box" onclick="check(this)"></div>Set 7-day follow-up reminder</li>
+      </ul>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap #15 — Starting Too Late</div>
+        <div class="trap-item"><span class="trap-emoji">📆</span><span>Commercial payers take 90–120 days to process. That means <strong>every week you wait is a week you push back your first payment</strong>. The biggest mistake new clinics make is waiting until everything else is "perfect" before submitting commercial applications. Submit as soon as CAQH is complete — don't wait for Medicaid approvals first.</span></div>
+      </div>
+
+      <button class="action-btn" onclick="markDone(8)">✅ UHC & Cigna Submitted — Next Step!</button>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 4 ═══ -->
+  <div class="section-label">💚 Phase 4 — Get Paid!</div>
+
+  <!-- STEP 9: EFT -->
+  <div class="step-card" id="card-9">
+    <div class="step-header" onclick="toggle(9)">
+      <div class="step-number todo" id="num-9">💰</div>
+      <div class="step-info">
+        <div class="step-title">Set Up Electronic Payments (EFT/ERA)</div>
+        <div class="step-subtitle">So insurance money goes straight to Safe Harbor's bank account</div>
+      </div>
+      <div class="step-badge badge-todo" id="badge-9">To Do</div>
+    </div>
+    <div class="step-body" id="body-9">
+      <div class="box green">
+        💰 <strong>This is the finish line!</strong> After each payer approves you, set up EFT (Electronic Funds Transfer) so payments go directly to Safe Harbor's bank account instead of paper checks. Do this separately for each payer after they approve you.
+      </div>
+
+      <h3>📄 What You'll Need</h3>
+      <div class="doc-item"><span>🏦</span> Voided check OR bank letter from Safe Harbor's business account</div>
+      <div class="doc-item"><span>📝</span> Safe Harbor W-9 (group)</div>
+      <div class="doc-item"><span>🆔</span> Group NPI: 9876543210</div>
+
+      <div class="box blue">Most payers use <strong>Availity</strong> for EFT setup. Need help? Call Availity: <a href="tel:8002824548" style="color:#1a7a8a;font-weight:800;">800-282-4548</a></div>
+
+      <ul class="checklist">
+        <li><div class="check-box" onclick="check(this)"></div>BCBS Oklahoma EFT enrolled</li>
+        <li><div class="check-box" onclick="check(this)"></div>Aetna Commercial EFT enrolled</li>
+        <li><div class="check-box" onclick="check(this)"></div>Humana EFT enrolled</li>
+        <li><div class="check-box" onclick="check(this)"></div>UnitedHealthcare EFT enrolled</li>
+        <li><div class="check-box" onclick="check(this)"></div>Cigna EFT enrolled</li>
+        <li><div class="check-box" onclick="check(this)"></div>Oklahoma Complete Health EFT enrolled</li>
+        <li><div class="check-box" onclick="check(this)"></div>TherapyNotes configured with all payer IDs</li>
+      </ul>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Bonus Trap — Forgetting EFT After Approval</div>
+        <div class="trap-item"><span class="trap-emoji">💸</span><span>Many clinics get approved by payers and then forget to set up EFT. Claims go through fine — but payments go to the wrong place or get held up as paper checks. <strong>Set up EFT within 48 hours of each approval letter arriving.</strong> Don't let money sit unclaimed.</span></div>
+      </div>
+
+      <button class="action-btn" onclick="markDone(9)">🎉 All Set Up — We're Done!</button>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div id="final-msg">
+    <div style="font-size:64px;margin-bottom:16px">🎉</div>
+    <h2 style="font-size:28px;font-weight:900;color:#0d2137;margin-bottom:10px">YOU DID IT, ADAM!</h2>
+    <p style="color:#5d6d7e;font-size:16px;font-weight:600;line-height:1.7">Safe Harbor is fully credentialed.<br>You navigated every trap.<br>Children in Tulsa are about to get the help they deserve. 💙<br><br>Mission: No Child Is Broken. ✅</p>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 9;
+  const completed = new Set();
+
+  function toggle(n) {
+    document.getElementById('body-' + n).classList.toggle('open');
+  }
+
+  function check(el) {
+    el.classList.toggle('checked');
+    el.textContent = el.classList.contains('checked') ? '✓' : '';
+  }
+
+  function markDone(n) {
+    completed.add(n);
+    const badge = document.getElementById('badge-' + n);
+    if (badge) { badge.textContent = '✅ Done!'; badge.className = 'step-badge badge-done'; }
+    const num = document.getElementById('num-' + n);
+    if (num) { num.className = 'step-number done'; }
+    document.getElementById('body-' + n).classList.remove('open');
+    updateProgress();
+    if (n < TOTAL) {
+      setTimeout(() => {
+        document.getElementById('body-' + (n+1)).classList.add('open');
+        document.getElementById('card-' + (n+1)).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 400);
+    }
+    if (completed.size === TOTAL) {
+      setTimeout(() => {
+        document.getElementById('final-msg').style.display = 'block';
+        document.getElementById('final-msg').scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
+  }
+
+  function updateProgress() {
+    const pct = Math.round((completed.size / TOTAL) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = completed.size + ' of ' + TOTAL + ' steps done';
+  }
+
+  function copyScript(btn) {
+    const text = btn.previousElementSibling.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = '📋 Copy This Script', 2000);
+    });
+  }
+</script>
+</body>
 </html>
