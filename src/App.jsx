@@ -1,7 +1,4 @@
 import { useState, useEffect } from "react";
-import { auth, provider, db } from "./firebase";
-import { signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "firebase/auth";
-import { doc, setDoc, onSnapshot, getDoc } from "firebase/firestore";
 
 const phases = [
   {
@@ -96,8 +93,6 @@ function LoginScreen({ onLogin, loading }) {
 }
 
 export default function App() {
-  const [user, setUser] = useState(null);
-  const [authLoading, setAuthLoading] = useState(true);
   const [data, setData] = useState(() => buildData());
   const [expandedPhase, setExpandedPhase] = useState(1);
   const [expandedStep, setExpandedStep] = useState(null);
