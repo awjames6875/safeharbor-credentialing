@@ -1,0 +1,1082 @@
+{
+  "app_name": "Safe Harbor Behavioral Health \u2014 Credentialing Command Center",
+  "clinic": {
+    "name": "Safe Harbor Behavioral Health",
+    "location": "Tulsa, Oklahoma",
+    "mission": "No child is broken",
+    "services": "Trauma-informed behavioral health for children ages 3-17",
+    "org_npi_type2": "9876543210",
+    "ein": "[FILL IN YOUR EIN]",
+    "odmhsas_license": "[FILL IN YOUR LICENSE NUMBER]",
+    "liability_insurance": "[FILL IN CARRIER NAME & POLICY NUMBER]"
+  },
+  "clinicians": [
+    {
+      "id": "clinician_1",
+      "label": "Clinician 1 (Lashauna)",
+      "npi_type1": "1234567890",
+      "caqh_id": "12345678",
+      "license_status": "Current",
+      "license_expiry": "2027-06-30",
+      "malpractice_status": "Current",
+      "malpractice_expiry": "2026-09-01"
+    },
+    {
+      "id": "clinician_2",
+      "label": "Clinician 2 (Apollo)",
+      "npi_type1": "987654321",
+      "caqh_id": "87654321",
+      "license_status": "Current",
+      "license_expiry": "2026-12-31",
+      "malpractice_status": "EXPIRED \u2014 RENEW IMMEDIATELY",
+      "malpractice_expiry": "2026-02-28"
+    }
+  ],
+  "alerts": [
+    {
+      "level": "CRITICAL",
+      "message": "Clinician 2 malpractice insurance EXPIRED February 28, 2026. Must renew before submitting ANY payer applications.",
+      "action": "Contact your liability insurance carrier today and request a renewed Certificate of Insurance."
+    }
+  ],
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Foundational Setup",
+      "description": "NPI numbers and CAQH profiles \u2014 must be done before anything else",
+      "color": "#1a7a8a"
+    },
+    {
+      "phase": 2,
+      "name": "Oklahoma Medicaid & SoonerSelect MCOs",
+      "description": "OHCA base enrollment + 3 managed care plans (Humana, Aetna Better Health, OK Complete Health)",
+      "color": "#2980b9"
+    },
+    {
+      "phase": 3,
+      "name": "Commercial Insurance",
+      "description": "BCBS Oklahoma, Aetna Commercial, UnitedHealthcare/Optum, Cigna/Evernorth \u2014 90-120 day timelines",
+      "color": "#8e44ad"
+    },
+    {
+      "phase": 4,
+      "name": "Payment Setup (EFT/ERA)",
+      "description": "Electronic funds transfer and remittance setup per payer after credentialing approved",
+      "color": "#27ae60"
+    }
+  ],
+  "status_legend": [
+    {
+      "status": "Not Started",
+      "color_bg": "#f4cccc",
+      "color_text": "#922b21",
+      "meaning": "Application not yet submitted; may be waiting on prerequisites",
+      "next_action": "Complete prerequisites, then submit application"
+    },
+    {
+      "status": "Ready to Submit",
+      "color_bg": "#fce5cd",
+      "color_text": "#784212",
+      "meaning": "All prerequisites met; application ready but not yet sent",
+      "next_action": "Submit application and record confirmation number"
+    },
+    {
+      "status": "Submitted",
+      "color_bg": "#fff2cc",
+      "color_text": "#7d6608",
+      "meaning": "Application sent to payer; waiting for initial review",
+      "next_action": "Follow up at Day 7 if no response",
+      "typical_duration": "1-2 weeks"
+    },
+    {
+      "status": "In Progress",
+      "color_bg": "#cfe2f3",
+      "color_text": "#1a5276",
+      "meaning": "Payer is actively working on application; documents uploaded",
+      "next_action": "Monitor for requests; follow up weekly",
+      "typical_duration": "2-4 weeks"
+    },
+    {
+      "status": "Under Review",
+      "color_bg": "#9fc5e8",
+      "color_text": "#154360",
+      "meaning": "File is complete and in credentialing committee review",
+      "next_action": "Follow up every 2 weeks for committee schedule",
+      "typical_duration": "2-6 weeks"
+    },
+    {
+      "status": "Pending Info",
+      "color_bg": "#d9d2e9",
+      "color_text": "#4a235a",
+      "meaning": "Payer requested additional information or documents",
+      "next_action": "Respond ASAP \u2014 follow up in 3 days"
+    },
+    {
+      "status": "Complete - Attested",
+      "color_bg": "#d9ead3",
+      "color_text": "#1e8449",
+      "meaning": "CAQH profile complete and attested (CAQH only)",
+      "next_action": "Authorize all payers; re-attest every 90 days"
+    },
+    {
+      "status": "Approved",
+      "color_bg": "#b6d7a8",
+      "color_text": "#145a32",
+      "meaning": "Credentialing approved; waiting for effective date or contract",
+      "next_action": "Sign contract if needed; confirm effective date",
+      "typical_duration": "1-2 weeks"
+    },
+    {
+      "status": "Active",
+      "color_bg": "#93c47d",
+      "color_text": "#0b5345",
+      "meaning": "Fully credentialed and active \u2014 can bill and see patients",
+      "next_action": "Monitor for re-credentialing notices (every 3 years)"
+    },
+    {
+      "status": "Denied",
+      "color_bg": "#e06666",
+      "color_text": "#7b241c",
+      "meaning": "Application denied by payer",
+      "next_action": "Request written denial reason; correct and resubmit"
+    },
+    {
+      "status": "On Hold",
+      "color_bg": "#cccccc",
+      "color_text": "#424949",
+      "meaning": "Application paused due to external factor",
+      "next_action": "Resolve blocking issue and notify payer to resume"
+    }
+  ],
+  "master_tracker": [
+    {
+      "Payer/Plan": "CAQH ProView",
+      "Type": "Foundation",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": "2026-03-03",
+      "Method": "Online",
+      "Confirmation #": "CAQH-12345",
+      "Status": "Complete - Attested",
+      "Missing Items": NaN,
+      "Follow-Up Date": NaN,
+      "Approval Date": "2026-03-03",
+      "Effective Date": "2026-03-03",
+      "Notes": "Initial attestation complete"
+    },
+    {
+      "Payer/Plan": "CAQH ProView",
+      "Type": "Foundation",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": "2026-03-03",
+      "Method": "Online",
+      "Confirmation #": "CAQH-54321",
+      "Status": "In Progress",
+      "Missing Items": "CV, Malpractice cert",
+      "Follow-Up Date": "2026-03-10",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Waiting on documents from clinician"
+    },
+    {
+      "Payer/Plan": "OHCA SoonerCare",
+      "Type": "Medicaid",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": "2025-11-15",
+      "Method": "Portal",
+      "Confirmation #": "OHCA-GRP-001",
+      "Status": "Active",
+      "Missing Items": NaN,
+      "Follow-Up Date": NaN,
+      "Approval Date": "2025-12-01",
+      "Effective Date": "2025-12-01",
+      "Notes": "Group enrollment confirmed"
+    },
+    {
+      "Payer/Plan": "OHCA SoonerCare",
+      "Type": "Medicaid",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": "2026-03-05",
+      "Method": "Portal",
+      "Confirmation #": "OHCA-IND-101",
+      "Status": "Submitted",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-12",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Individual enrollment under group"
+    },
+    {
+      "Payer/Plan": "OHCA SoonerCare",
+      "Type": "Medicaid",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "CAQH completion",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Waiting for CAQH attestation"
+    },
+    {
+      "Payer/Plan": "Aetna Better Health OK",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": "2026-03-06",
+      "Method": "Availity",
+      "Confirmation #": "AV-ABH-2024",
+      "Status": "Under Review",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-13",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Group contract submitted via Availity"
+    },
+    {
+      "Payer/Plan": "Aetna Better Health OK",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": "2026-03-06",
+      "Method": "Availity",
+      "Confirmation #": "AV-ABH-2025",
+      "Status": "Pending Info",
+      "Missing Items": "Liability insurance proof",
+      "Follow-Up Date": "2026-03-13",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Need to upload current malpractice cert"
+    },
+    {
+      "Payer/Plan": "Aetna Better Health OK",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "CAQH, OHCA enrollment",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Prerequisites not met"
+    },
+    {
+      "Payer/Plan": "Humana Healthy Horizons OK",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-10",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Call provider services 855-223-9868 for group contract"
+    },
+    {
+      "Payer/Plan": "Humana Healthy Horizons OK",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Pending group approval"
+    },
+    {
+      "Payer/Plan": "Humana Healthy Horizons OK",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract, CAQH",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Multiple prerequisites"
+    },
+    {
+      "Payer/Plan": "Oklahoma Complete Health",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-10",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Visit OklahomaCompleteHealth.com provider portal"
+    },
+    {
+      "Payer/Plan": "Oklahoma Complete Health",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Pending group approval"
+    },
+    {
+      "Payer/Plan": "Oklahoma Complete Health",
+      "Type": "SoonerSelect MCO",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract, CAQH",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Multiple prerequisites"
+    },
+    {
+      "Payer/Plan": "BCBS Oklahoma",
+      "Type": "Commercial",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": "2026-03-07",
+      "Method": "CAQH/Portal",
+      "Confirmation #": "BCBS-GRP-501",
+      "Status": "Submitted",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-14",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Group application via BCBSOK portal"
+    },
+    {
+      "Payer/Plan": "BCBS Oklahoma",
+      "Type": "Commercial",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Ready to Submit",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-14",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "CAQH authorized, waiting for group approval"
+    },
+    {
+      "Payer/Plan": "BCBS Oklahoma",
+      "Type": "Commercial",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "CAQH completion",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Complete CAQH first"
+    },
+    {
+      "Payer/Plan": "Aetna Commercial",
+      "Type": "Commercial",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-17",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Plan to submit via Availity week of 3/10"
+    },
+    {
+      "Payer/Plan": "Aetna Commercial",
+      "Type": "Commercial",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Pending group approval"
+    },
+    {
+      "Payer/Plan": "Aetna Commercial",
+      "Type": "Commercial",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract, CAQH",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Multiple prerequisites"
+    },
+    {
+      "Payer/Plan": "UnitedHealthcare/Optum",
+      "Type": "Commercial",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-24",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Lower priority - start after BCBS/Aetna"
+    },
+    {
+      "Payer/Plan": "UnitedHealthcare/Optum",
+      "Type": "Commercial",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Pending group approval"
+    },
+    {
+      "Payer/Plan": "UnitedHealthcare/Optum",
+      "Type": "Commercial",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract, CAQH",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Multiple prerequisites"
+    },
+    {
+      "Payer/Plan": "Cigna/Evernorth",
+      "Type": "Commercial",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-24",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Lower priority - start after BCBS/Aetna"
+    },
+    {
+      "Payer/Plan": "Cigna/Evernorth",
+      "Type": "Commercial",
+      "Clinician/Group": "Clinician 1",
+      "NPI": 1234567890,
+      "CAQH ID": 12345678.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Pending group approval"
+    },
+    {
+      "Payer/Plan": "Cigna/Evernorth",
+      "Type": "Commercial",
+      "Clinician/Group": "Clinician 2",
+      "NPI": 987654321,
+      "CAQH ID": 87654321.0,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": "Group contract, CAQH",
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Multiple prerequisites"
+    },
+    {
+      "Payer/Plan": "BCBS OK - EFT/ERA",
+      "Type": "Payment Setup",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": "2026-03-14",
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Enroll via Availity after credentialing approved"
+    },
+    {
+      "Payer/Plan": "Aetna - EFT/ERA",
+      "Type": "Payment Setup",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Enroll after credentialing approved"
+    },
+    {
+      "Payer/Plan": "Humana - EFT/ERA",
+      "Type": "Payment Setup",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Enroll after credentialing approved"
+    },
+    {
+      "Payer/Plan": "UHC - EFT/ERA",
+      "Type": "Payment Setup",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Enroll after credentialing approved"
+    },
+    {
+      "Payer/Plan": "Cigna - EFT/ERA",
+      "Type": "Payment Setup",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Enroll after credentialing approved"
+    },
+    {
+      "Payer/Plan": "OK Complete Health - EFT/ERA",
+      "Type": "Payment Setup",
+      "Clinician/Group": "Safe Harbor (Group)",
+      "NPI": 9876543210,
+      "CAQH ID": NaN,
+      "Date Submitted": NaN,
+      "Method": NaN,
+      "Confirmation #": NaN,
+      "Status": "Not Started",
+      "Missing Items": NaN,
+      "Follow-Up Date": NaN,
+      "Approval Date": NaN,
+      "Effective Date": NaN,
+      "Notes": "Enroll after credentialing approved"
+    }
+  ],
+  "contact_directory": [
+    {
+      "Payer/Plan": "CAQH ProView",
+      "Department": "Provider Support",
+      "Phone": "888-599-1771",
+      "Hours": "Mon-Fri 8am-8pm ET",
+      "Portal/Email": "proview.caqh.org/pr",
+      "Notes": "For login, attestation, technical issues"
+    },
+    {
+      "Payer/Plan": "OHCA SoonerCare",
+      "Department": "Provider Enrollment",
+      "Phone": "405-522-7171",
+      "Hours": "Mon-Fri 8am-5pm CT",
+      "Portal/Email": "oklahoma.gov/ohca",
+      "Notes": "Main OHCA provider line"
+    },
+    {
+      "Payer/Plan": "Aetna Better Health OK",
+      "Department": "Provider Services",
+      "Phone": "844-365-4385",
+      "Hours": "Mon-Fri 8am-5pm CT",
+      "Portal/Email": "AetnaBetterHealth.com/Oklahoma",
+      "Notes": "Member services line; ask for provider relations"
+    },
+    {
+      "Payer/Plan": "Aetna Better Health OK",
+      "Department": "Credentialing/Contracting",
+      "Phone": NaN,
+      "Hours": NaN,
+      "Portal/Email": "Via Availity",
+      "Notes": "Applications submitted through Availity portal"
+    },
+    {
+      "Payer/Plan": "Humana Healthy Horizons OK",
+      "Department": "Provider Services",
+      "Phone": "855-223-9868",
+      "Hours": "Mon-Fri 8am-5pm CT",
+      "Portal/Email": "Humana.com/Medicaid/Oklahoma",
+      "Notes": "Press option for provider services"
+    },
+    {
+      "Payer/Plan": "Humana Healthy Horizons OK",
+      "Department": "Provider Services (TTY)",
+      "Phone": "711",
+      "Hours": "Mon-Fri 8am-5pm CT",
+      "Portal/Email": NaN,
+      "Notes": "TTY for hearing impaired"
+    },
+    {
+      "Payer/Plan": "Oklahoma Complete Health",
+      "Department": "Provider Services",
+      "Phone": "833-752-1664",
+      "Hours": "Mon-Fri 8am-5pm CT",
+      "Portal/Email": "OklahomaCompleteHealth.com",
+      "Notes": "Ask for credentialing/network department"
+    },
+    {
+      "Payer/Plan": "BCBS Oklahoma",
+      "Department": "Provider Services",
+      "Phone": "800-942-5837",
+      "Hours": "Mon-Fri 7am-6pm CT",
+      "Portal/Email": "bcbsok.com/provider",
+      "Notes": "General provider line"
+    },
+    {
+      "Payer/Plan": "BCBS Oklahoma",
+      "Department": "Credentialing",
+      "Phone": NaN,
+      "Hours": NaN,
+      "Portal/Email": "Via CAQH & BCBSOK portal",
+      "Notes": "Authorize BCBSOK in CAQH ProView first"
+    },
+    {
+      "Payer/Plan": "BCBS Oklahoma",
+      "Department": "EFT/ERA Enrollment",
+      "Phone": NaN,
+      "Hours": NaN,
+      "Portal/Email": "Via Availity",
+      "Notes": "Use Availity Transaction Enrollment tool"
+    },
+    {
+      "Payer/Plan": "Aetna Commercial",
+      "Department": "Provider Services",
+      "Phone": "800-624-0756",
+      "Hours": "Mon-Fri 8am-6pm CT",
+      "Portal/Email": "Aetna.com/providers",
+      "Notes": "Commercial/HMO provider line"
+    },
+    {
+      "Payer/Plan": "Aetna Commercial",
+      "Department": "Credentialing",
+      "Phone": NaN,
+      "Hours": NaN,
+      "Portal/Email": "Via Availity",
+      "Notes": "Same Availity process as Aetna Better Health"
+    },
+    {
+      "Payer/Plan": "UnitedHealthcare/Optum",
+      "Department": "Provider Services",
+      "Phone": "800-711-4555",
+      "Hours": "Mon-Fri 7am-7pm CT",
+      "Portal/Email": "UHCprovider.com",
+      "Notes": "Main provider services"
+    },
+    {
+      "Payer/Plan": "UnitedHealthcare/Optum",
+      "Department": "Credentialing",
+      "Phone": NaN,
+      "Hours": NaN,
+      "Portal/Email": "Via CAQH & Optum portal",
+      "Notes": "Optum Provider Express for contracting"
+    },
+    {
+      "Payer/Plan": "Cigna/Evernorth",
+      "Department": "Provider Services",
+      "Phone": "800-882-4462",
+      "Hours": "24/7",
+      "Portal/Email": "Cigna.com/providers",
+      "Notes": "Behavioral health services: press option 3"
+    },
+    {
+      "Payer/Plan": "Cigna/Evernorth",
+      "Department": "Credentialing",
+      "Phone": NaN,
+      "Hours": NaN,
+      "Portal/Email": "Via CAQH & Cigna portal",
+      "Notes": "CignaforHCP.com for credentialing"
+    },
+    {
+      "Payer/Plan": "Availity",
+      "Department": "Support",
+      "Phone": "800-282-4548",
+      "Hours": "24/7",
+      "Portal/Email": "availity.com",
+      "Notes": "Portal technical support and enrollment help"
+    }
+  ],
+  "call_scripts": [
+    {
+      "Script Name": "Initial Follow-Up (Day 7)",
+      "When to Use": "7 days after submitting application with no response",
+      "Script Text": "Hi, this is [Your Name] with Safe Harbor Behavioral Health in Tulsa. I'm calling to follow up on a credentialing application we submitted on [Date] for [Clinician Name / Safe Harbor Group]. Our confirmation number is [Number]. Can you confirm the application was received and let me know if the file is complete for credentialing review? [PAUSE] Great\u2014and what is the typical timeline for credentialing committee review? Is there a next committee date I can note? [RECORD INFO] Thank you, I'll follow up again on [Date]. Can I have your name for my records? Thanks so much."
+    },
+    {
+      "Script Name": "Status Check (Weekly)",
+      "When to Use": "When status is In Progress and you're following up weekly",
+      "Script Text": "Hi, this is [Your Name] from Safe Harbor Behavioral Health. I'm checking on the status of our credentialing application for [Clinician/Group], confirmation number [Number], submitted [Date]. Has the file moved to credentialing committee review yet? [PAUSE] And are there any missing items or documents needed from us? [IF YES: What specifically do you need and what's the best way to send it?] [IF NO: Perfect\u2014when should I follow up again?] Can I confirm your name and a direct callback number? Thank you."
+    },
+    {
+      "Script Name": "Committee Timeline",
+      "When to Use": "When status is Under Review",
+      "Script Text": "Hi, this is [Your Name] with Safe Harbor Behavioral Health. Our credentialing file for [Clinician/Group], confirmation [Number], is under committee review. Can you tell me when the next credentialing committee meets? [PAUSE] And will our application be reviewed at that meeting, or is it scheduled for a later date? [RECORD DATE] Is there anything we can provide to support timely approval? [PAUSE] Great, I'll plan to follow up after [Committee Date]. May I have your name? Thank you."
+    },
+    {
+      "Script Name": "Document Confirmation",
+      "When to Use": "3 days after submitting requested documents (status: Pending Info)",
+      "Script Text": "Hi, this is [Your Name] from Safe Harbor Behavioral Health. We submitted [Document Names] on [Date] for [Clinician/Group], confirmation number [Number]. Can you confirm those documents were received and attached to the file? [PAUSE] And does that complete the file for credentialing review, or is anything else needed? [IF COMPLETE: When will it go to committee?] [IF NOT: What else do you need?] Thank you, and can I note your name for follow-up? Thanks."
+    },
+    {
+      "Script Name": "Effective Date Confirmation",
+      "When to Use": "Immediately after approval notice",
+      "Script Text": "Hi, this is [Your Name] with Safe Harbor Behavioral Health. We received approval notification for [Clinician/Group], confirmation [Number]. Can you confirm the effective date we can begin seeing patients and billing? [PAUSE] And will we receive a formal credentialing letter or contract to sign? [IF YES: When should we expect that and how will it be sent?] Also, can you confirm our group NPI [Number] and clinician NPI [Number] are loaded correctly in your system? [PAUSE] Thank you\u2014can I get your name and direct number in case we have questions? Appreciate your help."
+    },
+    {
+      "Script Name": "Initiation Script",
+      "When to Use": "When starting a new payer application (Not Started status)",
+      "Script Text": "Hi, this is [Your Name], credentialing coordinator for Safe Harbor Behavioral Health in Tulsa, Oklahoma. We're a pediatric behavioral health agency licensed by ODMHSAS, and we'd like to apply for network participation as a group practice. Can you direct me to the right department or provide the credentialing/contracting contact? [PAUSE] [IF TRANSFERRED: Repeat intro] We have our Type 2 organizational NPI, EIN, and two clinicians ready to credential. What's the process to apply as a group and attach our rendering providers? [PAUSE] Do you use CAQH ProView, or is there a separate application? [PAUSE] Can you email me the forms or send a portal link? My email is [Email]. And what documents will you need from us? [RECORD ALL INFO] Thank you\u2014may I have your name and direct number for follow-up? Appreciate it."
+    },
+    {
+      "Script Name": "Denial Response",
+      "When to Use": "After receiving a denial notice",
+      "Script Text": "Hi, this is [Your Name] from Safe Harbor Behavioral Health. We received a denial notification for [Clinician/Group], confirmation number [Number]. Can you provide the specific reason for the denial in writing, and let me know what steps we need to take to correct the issue and resubmit? [PAUSE] Is this a correctable issue, or is there an appeal process? [PAUSE] Once we address the issue, should we submit a new application or reference the original confirmation number? [RECORD ALL INFO] Can you email the denial details to [Email]? And may I have your name and direct callback number? Thank you."
+    },
+    {
+      "Script Name": "EFT/ERA Setup",
+      "When to Use": "After credentialing is approved and you're ready to enroll for payments",
+      "Script Text": "Hi, this is [Your Name] with Safe Harbor Behavioral Health. We were recently approved for network participation, and I need to enroll in Electronic Funds Transfer and Electronic Remittance Advice for claims payment. What's the process to set up EFT and ERA for our group? [PAUSE] Do you have an online portal, or do I need to complete paper forms? [IF PAPER: Can you email or fax the forms to me?] [IF ONLINE: What's the portal URL and will I need a login?] Our group NPI is [Number], EIN is [Number], and our legal name is Safe Harbor Behavioral Health. [PAUSE] How long does EFT/ERA enrollment typically take? [RECORD INFO] Can I have your name and a callback number? Thank you."
+    },
+    {
+      "Script Name": "Re-Attestation Reminder",
+      "When to Use": "When CAQH sends re-attestation notice",
+      "Script Text": "INTERNAL NOTE (not a phone script): Log into CAQH ProView, review all profile sections for accuracy, update any expired documents (license, malpractice, etc.), and click Attest. Record new attestation date in tracker. If any payer applications are in progress, call those payers to notify them the CAQH profile has been updated: 'Hi, this is [Your Name] from Safe Harbor. I wanted to let you know we just re-attested our CAQH profile for [Clinician Name], CAQH ID [Number], so the updated information is available for your review. Confirmation number for our pending application is [Number]. Thanks.'"
+    }
+  ],
+  "weekly_checklist": [
+    {
+      "Day": "Monday",
+      "Task": "Review Master Tracker",
+      "Details": "Check all rows; identify items with follow-up dates this week"
+    },
+    {
+      "Day": "Monday",
+      "Task": "CAQH attestation check",
+      "Details": "Verify both clinicians' CAQH profiles are attested and documents not expired"
+    },
+    {
+      "Day": "Monday",
+      "Task": "Prioritize follow-ups",
+      "Details": "List all payers/items needing calls this week; prioritize by urgency (Pending Info > Submitted > Under Review)"
+    },
+    {
+      "Day": "Tuesday",
+      "Task": "Make follow-up calls",
+      "Details": "Use scripts from Call Scripts sheet; update Status, Missing Items, and Notes columns after each call"
+    },
+    {
+      "Day": "Tuesday",
+      "Task": "Respond to payer requests",
+      "Details": "If any Pending Info items, gather and submit documents same day if possible"
+    },
+    {
+      "Day": "Wednesday",
+      "Task": "Submit new applications",
+      "Details": "For any Ready to Submit items, submit applications and record Date Submitted, Method, and Confirmation # immediately"
+    },
+    {
+      "Day": "Wednesday",
+      "Task": "Update follow-up dates",
+      "Details": "For every item you touched this week, calculate and enter next Follow-Up Date per Status Guide rules"
+    },
+    {
+      "Day": "Thursday",
+      "Task": "Check email and portals",
+      "Details": "Log into Availity, payer portals, and email for credentialing notifications; update tracker with any status changes"
+    },
+    {
+      "Day": "Thursday",
+      "Task": "Document review",
+      "Details": "Check expiration dates on licenses, malpractice, and other credentials; flag anything expiring in next 60 days"
+    },
+    {
+      "Day": "Friday",
+      "Task": "End-of-week tracker update",
+      "Details": "Ensure all Status, Notes, and Follow-Up Date fields are current; identify blockers for next week"
+    },
+    {
+      "Day": "Friday",
+      "Task": "Weekly summary to leadership",
+      "Details": "Send brief email: # active applications, # approved this week, # pending issues, next week's priorities"
+    },
+    {
+      "Day": "As Needed",
+      "Task": "Respond to approvals",
+      "Details": "When you receive approval: call for Effective Date Confirmation (script), update Status to Active, trigger EFT/ERA enrollment"
+    },
+    {
+      "Day": "As Needed",
+      "Task": "Handle denials",
+      "Details": "Use Denial Response script immediately; escalate to leadership; create action plan to correct and resubmit"
+    }
+  ],
+  "document_checklist": [
+    {
+      "Document Type": "State Professional License",
+      "Required For": "All payers, CAQH",
+      "Clinician 1 Status": "Current",
+      "Clinician 1 Expiry": "2027-06-30",
+      "Clinician 2 Status": "Current",
+      "Clinician 2 Expiry": "2026-12-31",
+      "Group/Safe Harbor Status": "N/A (facility license separate)",
+      "Group Expiry": NaN,
+      "Notes": "Upload to CAQH; verify OHCA has current copy"
+    },
+    {
+      "Document Type": "Professional Liability Insurance",
+      "Required For": "All payers, CAQH",
+      "Clinician 1 Status": "Current",
+      "Clinician 1 Expiry": "2026-09-01",
+      "Clinician 2 Status": "Expired - NEED",
+      "Clinician 2 Expiry": "2026-02-28",
+      "Group/Safe Harbor Status": "Current (group policy)",
+      "Group Expiry": "2026-09-01",
+      "Notes": "Clinician 2 needs renewal ASAP"
+    },
+    {
+      "Document Type": "CV/Resume",
+      "Required For": "CAQH, some MCOs",
+      "Clinician 1 Status": "Current",
+      "Clinician 1 Expiry": "Update annually",
+      "Clinician 2 Status": "Current",
+      "Clinician 2 Expiry": "Update annually",
+      "Group/Safe Harbor Status": NaN,
+      "Group Expiry": NaN,
+      "Notes": "Keep updated in CAQH"
+    },
+    {
+      "Document Type": "W-9 (Individual)",
+      "Required For": "CAQH, credentialing",
+      "Clinician 1 Status": "Current",
+      "Clinician 1 Expiry": "Update if address/name changes",
+      "Clinician 2 Status": "Current",
+      "Clinician 2 Expiry": "Update if address/name changes",
+      "Group/Safe Harbor Status": NaN,
+      "Group Expiry": NaN,
+      "Notes": "Must match legal name exactly"
+    },
+    {
+      "Document Type": "W-9 (Group)",
+      "Required For": "Contracting, EFT",
+      "Clinician 1 Status": NaN,
+      "Clinician 1 Expiry": NaN,
+      "Clinician 2 Status": NaN,
+      "Clinician 2 Expiry": NaN,
+      "Group/Safe Harbor Status": "Current",
+      "Group Expiry": "Update if EIN/name changes",
+      "Notes": "Safe Harbor's W-9 for group contracts"
+    },
+    {
+      "Document Type": "Government-Issued ID",
+      "Required For": "Some payers",
+      "Clinician 1 Status": "On file",
+      "Clinician 1 Expiry": NaN,
+      "Clinician 2 Status": "On file",
+      "Clinician 2 Expiry": NaN,
+      "Group/Safe Harbor Status": NaN,
+      "Group Expiry": NaN,
+      "Notes": "Keep scanned copy ready"
+    },
+    {
+      "Document Type": "NPI Verification (NPPES)",
+      "Required For": "All payers",
+      "Clinician 1 Status": "Verified 2026-03-03",
+      "Clinician 1 Expiry": "Check quarterly",
+      "Clinician 2 Status": "Verified 2026-03-03",
+      "Clinician 2 Expiry": "Check quarterly",
+      "Group/Safe Harbor Status": "Verified 2026-03-03",
+      "Group Expiry": "Check quarterly",
+      "Notes": "Confirm NPPES matches legal name, address"
+    },
+    {
+      "Document Type": "Articles of Organization/Incorporation",
+      "Required For": "Group contracting",
+      "Clinician 1 Status": NaN,
+      "Clinician 1 Expiry": NaN,
+      "Clinician 2 Status": NaN,
+      "Clinician 2 Expiry": NaN,
+      "Group/Safe Harbor Status": "On file",
+      "Group Expiry": NaN,
+      "Notes": "Oklahoma LLC/Corp docs for Safe Harbor"
+    },
+    {
+      "Document Type": "ODMHSAS License",
+      "Required For": "Oklahoma Medicaid, SoonerSelect",
+      "Clinician 1 Status": NaN,
+      "Clinician 1 Expiry": NaN,
+      "Clinician 2 Status": NaN,
+      "Clinician 2 Expiry": NaN,
+      "Group/Safe Harbor Status": "Current",
+      "Group Expiry": "2027-03-31",
+      "Notes": "Facility behavioral health license"
+    },
+    {
+      "Document Type": "Voided Check or Bank Letter",
+      "Required For": "EFT enrollment",
+      "Clinician 1 Status": NaN,
+      "Clinician 1 Expiry": NaN,
+      "Clinician 2 Status": NaN,
+      "Clinician 2 Expiry": NaN,
+      "Group/Safe Harbor Status": "Current",
+      "Group Expiry": "Update if bank changes",
+      "Notes": "For Safe Harbor's business account"
+    },
+    {
+      "Document Type": "CLIA Certificate",
+      "Required For": "If applicable",
+      "Clinician 1 Status": NaN,
+      "Clinician 1 Expiry": NaN,
+      "Clinician 2 Status": NaN,
+      "Clinician 2 Expiry": NaN,
+      "Group/Safe Harbor Status": NaN,
+      "Group Expiry": NaN,
+      "Notes": "Only if conducting lab tests"
+    },
+    {
+      "Document Type": "Board Certification",
+      "Required For": "If applicable",
+      "Clinician 1 Status": NaN,
+      "Clinician 1 Expiry": NaN,
+      "Clinician 2 Status": NaN,
+      "Clinician 2 Expiry": NaN,
+      "Group/Safe Harbor Status": NaN,
+      "Group Expiry": NaN,
+      "Notes": "Upload to CAQH if clinician is board-certified"
+    },
+    {
+      "Document Type": "DEA Certificate",
+      "Required For": "If prescribing",
+      "Clinician 1 Status": NaN,
+      "Clinician 1 Expiry": NaN,
+      "Clinician 2 Status": NaN,
+      "Clinician 2 Expiry": NaN,
+      "Group/Safe Harbor Status": NaN,
+      "Group Expiry": NaN,
+      "Notes": "Only for prescribers; upload to CAQH"
+    }
+  ],
+  "follow_up_rules": {
+    "Submitted": "Call on Day 7 after submission",
+    "In Progress": "Call every week",
+    "Under Review": "Call every 2 weeks",
+    "Pending Info": "Call 3 days after submitting requested documents",
+    "Approved": "Call immediately to confirm effective date"
+  },
+  "key_portals": {
+    "NPPES (Individual NPI)": "https://nppes.cms.hhs.gov",
+    "CAQH ProView": "https://proview.caqh.org",
+    "OHCA SoonerCare": "https://oklahoma.gov/ohca",
+    "Availity (BCBS, Aetna)": "https://www.availity.com",
+    "BCBS Oklahoma": "https://www.bcbsok.com/provider",
+    "UnitedHealthcare": "https://www.uhcprovider.com",
+    "Cigna": "https://cignaforhcp.cigna.com",
+    "Aetna Better Health OK": "https://www.aetnabetterhealth.com/oklahoma",
+    "Humana Oklahoma Medicaid": "https://provider.humana.com/medicaid/oklahoma-medicaid",
+    "Oklahoma Complete Health": "https://www.oklahomacompletehealth.com"
+  },
+  "prompt_for_openclaw": "You are rebuilding the Safe Harbor Behavioral Health credentialing tracker app. Use the JSON data provided to populate ALL sections. The app must include: (1) ALERT BANNER at top showing any critical alerts, (2) MASTER TRACKER with all payers grouped by phase, color-coded status badges, date fields, notes, and confirmation number fields, (3) CONTACT DIRECTORY tab with clickable phone numbers and portal links, (4) CALL SCRIPTS tab with 8 expandable scripts and a one-click copy button on each, (5) DOCUMENT CHECKLIST tab showing Clinician 1 vs Clinician 2 side by side with red highlighting on expired documents, (6) WEEKLY CHECKLIST tab with Mon-Fri tasks and resettable checkboxes, (7) STATUS LEGEND always visible as a reference. The clinic serves children ages 3-17 in Tulsa OK. Brand colors: navy #0d2137, teal #1a7a8a, gold #e8a838. All data is pre-loaded from the JSON file provided."
+}
