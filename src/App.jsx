@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { auth, provider, db } from "./firebase";
-import { signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "firebase/auth";
+import { signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc, onSnapshot, getDoc } from "firebase/firestore";
 
 const phases = [
@@ -148,7 +148,11 @@ export default function App() {
     setTimeout(() => setSyncStatus("idle"), 2500);
   };
 
-  const handleLogin = () => signInWithRedirect(auth, provider);
+  const handleLogin = () => signInWithPopup(auth, provider).catch(err => {
+    console.error("Login error:", err);
+    // Fallback to redirect if popup blocked
+    if (err.code === 'auth/popup-blocked') signInWithRedirect(auth, provider);
+  });
 
   const updateStep = (phaseId, stepId, fields) => {
     const newData = data.map(p => p.id === phaseId ? { ...p, steps: p.steps.map(s => s.id === stepId ? { ...s, ...fields } : s) } : p);
